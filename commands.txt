@@ -1,0 +1,54 @@
+
+
+		Guided Exercise:
+		
+1.	Domain:	On Workstation
+
+	cd /opt/jboss-eap-7.0/bin
+	./domain.sh -Djboss.domain.base.dir=/home/student/JB248/labs/domain/machine1/domain/ --host-config=host-master.xml
+	
+2.	Host2:	On Workstation
+
+	cd /opt/jboss-eap-7.0/bin
+	./domain.sh -Djboss.domain.base.dir=/home/student/JB248/labs/host/machine2/domain/ --host-config=host-slave.xml -Djboss.domain.master.address=172.25.250.254
+	
+3.	Host3:	On Workstation
+
+	cd /opt/jboss-eap-7.0/bin
+	./domain.sh -Djboss.domain.base.dir=/home/student/JB248/labs/host/machine3/domain/ --host-config=host-slave.xml -Djboss.domain.master.address=172.25.250.254
+	
+4.	CLI:	On Workstation
+	
+	cd /opt/jboss-eap-7.0/bin
+	./jboss-cli.sh --connect --controller=172.25.250.254:9990
+	
+	
+		LAB:
+		
+1.	Domain: On Workstation
+
+	cd /opt/jboss-eap-7.0/bin
+	sudo -u jboss ./domain.sh -Djboss.domain.base.dir=/opt/domain/ --host-config=host-master.xml
+	
+2.	ServerA: on ServerA
+
+	## Use ssh servera only one time
+	
+	ssh servera
+	cd /opt/jboss-eap-7.0/bin
+	sudo -u jboss ./domain.sh -Djboss.domain.base.dir=/opt/domain/ --host-config=host-slave.xml -Djboss.domain.master.address=172.25.250.254
+	
+	
+3.	ServerB: on ServerB
+
+	## Use ssh serverb only one time 
+	
+	ssh serverb
+	cd /opt/jboss-eap-7.0/bin
+	sudo -u jboss ./domain.sh -Djboss.domain.base.dir=/opt/domain/ --host-config=host-slave.xml -Djboss.domain.master.address=172.25.250.254
+	
+	
+4.	CLI: On Workstation
+	
+	cd /opt/jboss-eap-7.0/bin
+	./jboss-cli.sh --connect --controller=172.25.250.254:9990

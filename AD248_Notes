@@ -1,0 +1,628 @@
+
+Welcome to AD248  JBoss Admin
+EAP 7.4
+9:00 AM - 5:00 PM London 
+
+
+
+Audio MIC/ Video / Screen Share / 
+
+
+Name:
+Company/Org: If Possible
+Prerequisites:
+	1. Base experience with system administration on Microsoft Windows, UNIX, or Linux® operating systems
+	2. Basic understanding of TCP/IP networking
+	3. Linux	vim/vi   cp mkdir mv rm scp ssh chmod 
+	4. No prior knowledge of Java or shell scripting is required
+Expectation:
+Hobbies/Interesting Things:
+Country/City/Timezone:
+
+GMT +1	4
+GMT +2	2
+GMT +3	1
+GMT +4	1
+
+
+
+
+
+Application(App) Server:
+
+Bank
+Business Logic:		money transfer, bank fees, saving
+Support Logic:		Security, Database connection, Messaging, Web Access, Logging, caching	via Application Server
+
+JBoss EAP is written in Java Language 
+
+JVM process where you can deploy your Application
+
+EAP 7  =  JDK 8 + JAVA EE 7
+
+	Community (FREE)		Enterprise (PAID)
+
+	jboss.org(till 2006)		redhat.com
+	Jboss AS 5			Jboss EAP 5
+	JBoss AS 6			XXXX
+	JBoss AS 7			JBoss EAP 6
+
+	wildfly.org			redhat.com
+
+	wildfly 8
+	wildfly 9			JBoss EAP 7.0 7.4
+	wildfly 10
+	wildfly 34
+
+	Wildfly:
+	1. Wildfly core (Wildfly Kernel) can start very fast in few seconds
+	2. Wildfly Modules 
+
+	Core (Base of Pizza) Modules (Topping)
+	Modules (Services) e.q clustering, messaging, caching, Logging, Database
+
+in 2012, redhat acquired FuseSource
+
+Apache ActiveMQ  -->  FuseSource AMQ   --> JBoss AMQ
+
+
+
+For Developer Prespective:	
+Sun/Oracle Java Specification
+
+Web Profile : Common Technologies   Servlets, JSP, JSF, CDI (Spring Framework) , EJB Lite (Session Beans)
+Full Profile: Web Profile + More Technologies (Transaction, Messgaing (EJB Full MDB))
+
+App Server =  Web Server + Extra Technologies
+
+Web Profile is supported by Web Servers				Tomcat,Jetty
+Full Profile is supported by Application Servers		Glassfish,IBM Websphere,Oracle Weblogic, JBoss EAP
+
+EJB
+Session Beans			EJB Lite		Web Profile
+Entity Beans (Obsolete)		Hibernate JPA		
+Message Driven			EJB Full		Full Profile
+
+First TIme Install -> GUI -> Select -> One installation Complete -> LAST STEP (Save the Settings as Answer file)
+Second Server Install -> Answer FIle
+Thirs- > Answer File
+
+
+Port Reduction:					EAP6					EAP7
+1. Web-based management console (Browser) 	9990(http-interface GUI)		9990(http-interface GUI)
+2. command line interface (CLI)			9999(native-interface CLI)		9990(http-interface CLI)
+   (native interface)
+
+9999		Domain Intra Host Controller comunication Master-Slave pull profiles,server-group
+
+ClassLoader:
+
+EAP 5: single loader, App1(MYSQL 5.1 Driver.class we need EAP1 Instance), App2(MYSQL 6.0 Driver.class we need EAP2 Instance)
+
+EAP6,7: Separate classloader for both version
+
+default = basic subsystem
+ha = default + hish availbility ha (jgroups,modcluster)
+full default + Messaging
+full-ha = default + ha + full
+
+
+Address already in use:
+
+Socket:   IP Addess + Port number
+Instance 1	127.0.0.1:8080 or 172.25.250.254:8180
+Instance 2	172.25.250.254:8080
+
+
+Off-line CLI:  -> NOT connected to Running EAP -> Embed Server
+Earlier CLI	-> Running EAP Instance	-> impact running EAP
+
+Question: 9999 is out of EAP (NO, it is still used but for different purpose DOMAIN MODE)
+
+
+	in 2012: Fuse Source
+	Apache ActiveMQ	:	JBoss A-MQ
+	Eclipse	: 	JBoss Developer Studio
+Web and Full Profile : JEE 7  FORGET THIS FOR NOW ON  
+
+EAP profiles:
+Collection of subsystems 
+
+Native load-balancer:
+
+EAP 6		SOme third party software for LB (Apache httpd , iis)
+EAP 7		instance of EAP as LB
+
+
+Managing EAP 6 instances: EAP 6.2 or Higher
+
+
+
+mysql5.5 classloader Driver.class 
+mysql6.0 classloader Driver.class
+
+
+Installation:
+
+zip
+rpm
+jar
+Openshift Container xPaas
+
+
+
+
+Wildfly Kernel -> modules -> extension ->subsystem
+
+wildfly core kernel will always be there
+
+JBOSS_HOME/modules/system/layers/base  	Out of Box Modules
+JBOSS_HOME/modules/system/layers 	Third-party products
+JBOSS_HOME/modules  			Add local custom modules
+
+
+Modules (modules) -> Extension Must be there -> subsystem (as it is or you want to modisy default value in jar  )
+
+
+1. Get the jar file from vendor (oracle)
+
+2. Modules		Bank			$JBOSS_HOME/modules/.../main/(1. Jar file 2.module.xml (name,jar,depedencies))
+
+3. Extension		Credit/Debit Card	just first step towards using that module for services
+						(link between modules folder and EAP Services)
+
+4. Subsystem		Money to spend		EAP (collection of subsystems defined which starts as 	<profile>						
+                                                service [start service provided my module])
+                                                
+                                                
+   Subsystem can be defined in 2 ways:
+	a.	As it is or Default Values
+			<subsystem xmlns="urn:jboss:domain:jaxrs:1.0"/>
+	b.	Customization
+			<subsystem xmlns="urn:jboss:domain:jpa:1.1">
+				<jpa default-datasource="" default-extended-persistence-inheritance="DEEP"/>
+			</subsystem>
+
+
+Standalone.xml: Standalone  server as single profile, "Unnamed Profile" 
+domain.xml: multiple instances, multiple profiles available, Named Profiles
+		Out of Box: 4 default,ha,full,full-ha
+			Custom profile can be created
+
+
+
+Users:
+1. Management Users		mgmt-users.properties	mgmt-roles.properties	Login to EAP console(admin,monitor,deployer)
+2. Application Users		app-users.properties	app-roles.properties	Login to Application()
+
+
+
+
+
+
+
+Interfaces:
+
+management: IP for managing EAP
+
+public: Ip for accessing your application
+
+
+
+
+Chapter 3:
+CLI
+/	further level down
+:	Perform come action/activity/operation
+
+
+Connect with CLI
+
+1. Default Disconnected
+$JBOSS_HOME/bin/jboss-cli.sh
+connect IP:PORT_NUMBER (if not running on 127.0.0.1:9990)
+
+2. Default Connected
+$JBOSS_HOME/bin/jboss-cli.sh --connect/-c            //default --controller=127.0.0.1:9990
+
+3. Connected on SPecific IP
+$JBOSS_HOME/bin/jboss-cli.sh --connect/-c --controller=172.25.250.254:10990		
+
+
+
+Upload a new deployment:     		Zip File (Managed)
+Create an unmanaged deployment:		Exploded (Unmanaged)
+
+
+	tar	Tape Archive		Backup
+	jar	Java Archive		Basic Java(COnsole,NOT WEB awt,panel)
+	war	Web Archive		Web Profile(developer tech)
+	ear	Enterprise Archive	Full Profile(MDB,Transactions)
+
+
+
+
+Chapter 4:
+CLI
+/	further level down
+:	Perform come action/activity/operation
+
+
+Connect with CLI
+
+1. Default Disconnected
+$JBOSS_HOME/bin/jboss-cli.sh
+
+2. Default Connected
+$JBOSS_HOME/bin/jboss-cli.sh --connect/-c            //default --controller=127.0.0.1:9990
+
+3. Connected on SPecific IP
+$JBOSS_HOME/bin/jboss-cli.sh --connect/-c --controller=172.25.250.254:10990
+
+
+
+DC Mikkel JVM = 1 PC + 1 HC
+H1 Dniel  JVM = 1 PC + 1 HC + 1 S1
+H2 M 	  JVM = 1 PC + 1 HC + 1 S3
+
+		Recovery:
+Page 147:
+
+1. Cached-dc and --backup		till EAP 6.2 this was only option
+
+Take hard/good decision when time is in your favour
+
+Recovering from a failed domain controller
+
+./domain.sh --backup -Djboss.domain.master.address=172.25.250.254
+
+
+./domain.sh --cached-dc -Djboss.domain.master.address=172.25.250.254
+
+
+
+
+
+Page 157:
+2. Configuring multiple masters	from EAP 6.3 onwards
+
+<static-discovery name="primary" protocol="${jboss.domain.master.protocol:remote}" host="172.25.250.100" port="${jboss.domain.master.port:9999}"
+<static-discovery name="backup" protocol="${jboss.domain.master.protocol:remote}" host="172.25.250.101" port="${jboss.domain.master.port:9999}"/>
+
+
+Snapshot of domain.xml and host.xml files
+Domain.xml
+
+host.xml of master and all slave host controllers
+
+Snapshot:
+Domain Controller (domain.xml)
+	/:take-snapshot
+Host Controller  (host.xml)
+	/host=host_slave_name:take-snapshot
+
+
+Chapter 5:
+
+Create Server-groups:
+domain.xml
+Admin console and CLI
+
+Create servers:
+host.xml
+Admin console and CLI
+
+Deploy Applications:
+
+Deploy and Assign into Server Groups:
+domain.xml
+
+
+
+
+
+Chapter 6:
+
+	1. Driver, Download jar file from vendor mysql.jar
+	2. $JBOSS_HOME/modules/some_module/main/jar,module.xml(name,dependencies_modules,jar_file_name)
+	3. Inform standalone.xml/domain.xml about that modules
+	4. Create Datasources
+
+data source		XA data source.
+Non-transactional	Transactional
+non-distributed		Distributed amazon(oracle) barclay(mysql) messgaing
+
+
+Validate on Match	on fly testing of connection resource consulming
+Background Validation	EAP will verify after certain interval 60s easier 
+
+Profile< subsystem
+
+Configration Changes:
+JNDI,Driver (standalone.xml,domain.xml,host.xml) (disconnected CLI Mode)
+
+JNDI Java Naming Directory Interface
+
+Setup changes:
+Create module (disconnected CLI Mode)
+
+
+pool
+min-connection
+max-connection
+prefill
+enabled-statstics
+
+
+
+Chapter 7:
+
+		Handlers:
+	where you want to log:
+	CONSOLE -- terminal
+	file	-- server.log
+	periodic -- date wise(day,hour,month)
+
+
+		Loggers: Logging category
+	particular part of Application  you want logs
+	CRM App:
+	HR   -  WARN
+	Procurement: DEBUG
+	Security: DEBUG
+	IT: INFO
+	mail: info and higher
+
+		ROOT Logger: 
+	enable handler
+	Message by Application:
+	Message by EAP Server: root-logger
+
+
+Chapter 8:
+
+JMS Specification 
+JBoss AMQ (Fusesource AMQ)(Apache ActiveMQ) acquired from FuseSource 2012
+
+EAP5		JBoss Messaging
+EAP6		HornetQ			Embedded
+EAP7		ActiveMQ-Artemis	Embedded and Standalone
+		MRG Messaging
+
+Sender		One to One(JMS Queue) 	Receiver		Bank to you
+Publisher 	one to Many(JMS Topic)	Subscriber		Weather Report 
+
+
+			Sender			Receiver
+	in-vm		in-vm Connector		in-vm Acceptor		
+	http		http connector		http acceptor		(hornetq  netty)
+
+
+Connection APP -> EAP  in-vm/remote
+app -> message to one QUEUE /many Topic
+
+Active MQ 5/6 uses kahadb
+ActiveMQ Artemis (HornetQ) journal Files introduced in HornetQ
+
+MC list all messages in one time (number of messages in different queue)
+
+
+
+NIO 				AIO
+Native I/O everywhere		Async I/O Linux libaio
+Windows				Linux
+Sync I/O			500 messages
+				Automatically Fallback to NIO if AIO is NOT available
+
+
+
+
+	Dead Letter Queue			Expiry Queue
+	No. of Attempts				TTL Time to Live
+	EAP					Application
+
+Application Message -> Queue 
+EAP Application Users -> Queue
+
+Application Users -> application-users.properties application-roles.properties
+
+
+Chapter 9: Security
+
+
+
+https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.0/html-single/login_module_reference/index
+https://developers.redhat.com/blog/2018/04/20/elytron-new-security-framework-wildfly-jboss-eap/
+https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.1/html/migration_guide/migrating_to_elytron
+
+
+
+Database security
+
+1. define security domain
+2. use JNDI of databse to point
+
+
+Business logic Revenue			support logic (No Revenue)
+money					connect to database, secuirty,messgaing,mail
+
+
+in web.xml (login)
+
+<login-config>
+<auth-method>BASIC</auth-method>
+</login-config>
+
+
+BASIC		Ugly Window Plain text
+DIGEST		Ugly Window Encrypted
+FORM		Good PAGE
+Client
+
+
+Chapter 10: JVM
+EAP6   JRE 1.6 1.7		Permanent Generation
+EAP7	JDK1.8			Metaspace
+
+
+1+2+3+4+5
+
+
+
+
+
+
+Standalone:  $JBOSS_HOME/bin/standalone.conf
+
+Domain: 
+Process Controller		$JBOSS_HOME/bin/domain.conf
+Host Controller			$JBOSS_HOME/bin/domain.conf
+
+EAP Instances:
+
+Host Level		host.xml		<jvms><jvm>			Host
+Domain Level		domain.xml		<server-group><jvm>		server-group
+Host Level		host.xml		<server><jvm>			server
+
+
+
+
+Chapter 11:
+AJP Apache Jserv Protocol used for Load Balancing 
+EAP 5		Tomcat 6
+EAP 6		Jboss Web Server (Tomcat 7)
+EAP 7		Undertow
+
+Dynamic Pages: e.g. How many tansactions you did in one month
+Static pages: Images im static Buffer Cache(take from disk and store in Memory)
+
+
+			#### Secure Management Console/CLI ####
+
+keytool -genkeypair -alias appserver -storetype jks -keyalg RSA -keysize 2048 -keypass password1 -keystore /home/student/identity.jks -storepass password1 -dname "CN=appserver,OU=Sales,O=Systems Inc,L=Raleigh,ST=NC,C=US" -validity 730 -v
+
+
+/core-service=management/management-interface=http-interface:write-attribute(name=secure-socket-binding, value=management-https)
+
+/core-service=management/management-interface=http-interface:undefine-attribute(name=socket-binding)
+
+
+/core-service=management/security-realm=ManagementRealmHTTPS:add
+
+/core-service=management/security-realm=ManagementRealmHTTPS/authentication=properties:add(path=https-mgmt-users.properties,relative-to=jboss.server.config.dir)
+
+
+touch /home/student/infra/standalone/configuration/https-mgmt-users.properties
+
+
+./add-user.sh -up /home/student/infra/standalone/configuration/https-mgmt-users.properties -r ManagementRealmHTTPS
+
+
+/core-service=management/management-interface=http-interface:write-attribute(name=security-realm,value=ManagementRealmHTTPS)
+
+
+
+/core-service=management/security-realm=ManagementRealmHTTPS/server-identity=ssl:add(keystore-path=/home/student/identity.jks,keystore-password=password1, alias=appserver)
+
+/:reload
+
+Update jboss-cli.xml present under EAP_HOME/bin.
+
+Update the value of <default-protocol> to https-remoting.
+In <default-controller>, update the value of <protocol> to https-remoting.
+In <default-controller>, update the value of <port> to 9993.
+The resulting XML should look like:
+
+Raw
+<jboss-cli xmlns="urn:jboss:cli:2.0">
+    <default-protocol use-legacy-override="true">https-remoting</default-protocol>
+    <!-- The default controller to connect to when 'connect' command is executed w/o arguments -->
+    <default-controller>
+        <protocol>https-remoting</protocol>
+        <host>localhost</host>
+        <port>9993</port>
+    </default-controller>
+
+
+
+
+
+
+Chapter 12:
+
+Group 1 - full-ha: servera.1 serverb.1
+
+server_balancer (EAP7): can work as LB
+   
+Load Balancer Apache httpd, iis,nginx
+
+
+AJP:	Apache Jserv Protocol
+
+JGroups	system:			Inter server Communication
+	
+Infinispan subsystem:		Caching of session/attributes
+
+
+jgroups,infinispan
+
+for clapping you need 2 hands:
+
+Revenue/Non Revenue
+
+Application : <distributable/> in web.xml
+          Money App: Amazon,ecommerce app clustering required HA
+	  local App: local attendance app, clustering not required normally HA not required
+
+	server-group				Application		cluster
+	
+	default,full(no Jgroups)  		distributable		NO		
+	ha,full-ha				non-distributable	NO
+	ha,full-ha				distributable		YES	
+
+
+
+
+
+ BATCH SUBSYSTEM:
+New in EAP7
+
+
+
+
+keytool -genkeypair -alias appserver -storetype jks -keyalg RSA -keysize 2048 -keypass password1 -keystore ./identity.jks -storepass password1 -dname "CN=appserver,OU=Sales,O=Systems Inc,L=Raleigh,ST=NC,C=US" -validity 730 -v
+
+
+
+
+./add-user.sh -up EAP_HOME/standalone/configuration/https-mgmt-users.properties -r ManagementRealmHTTPS
+
+/host=serverb/core-service=management/security-realm=HTTPSRealm/server-identity=ssl:add(keystore-path=/opt/keystore/identity.jks, keystore-password=changeit, alias=appserver)
+
+
+
+
+./standalone.sh --server-config=standalone-full-ha.xml -Djboss.server.base.dir=/home/student/JB248/labs/jgroups-cluster1 -Djboss.bind.address=172.25.250.254 -Djboss.bind.address.private=172.25.250.254 -Djboss.node.name=jgroups-cluster1
+
+
+./standalone.sh --server-config=standalone-full-ha.xml -Djboss.server.base.dir=/home/student/JB248/labs/jgroups-cluster2 -Djboss.bind.address=172.25.250.254 -Djboss.bind.address.private=172.25.250.254 -Djboss.socket.binding.port-offset=100 -Djboss.node.name=jgroups-cluster2
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
