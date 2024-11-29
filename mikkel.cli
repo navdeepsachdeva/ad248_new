@@ -1,0 +1,8 @@
+batch
+
+/interface=meme:add(nic=cni-podman0)
+/subsystem=datasources/data-source=ExampleDS:write-attribute(name=min-pool-size,value=10)
+/system-property=z:add(value=50)
+reload
+
+run-batch
